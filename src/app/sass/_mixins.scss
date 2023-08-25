@@ -1,0 +1,22 @@
+@mixin img {
+    img {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+    }
+}
+
+@mixin flexAndItemsCenter {
+    display: flex;
+    align-items: center;
+}
+
+@mixin flexAndSpaceBetween {
+    display: flex;
+    justify-content: space-between;
+}
+
+@mixin focusNone {
+    outline: none;
+    box-shadow: none;
+}

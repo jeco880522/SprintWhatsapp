@@ -1,0 +1,71 @@
+@use 'mixins';
+@use 'variables';
+
+.chat {
+    &__container {
+        width: 70%;
+        height: 100%;
+    }
+    &__contact{
+        @include mixins.flexAndItemsCenter;
+        padding: 2%;
+        justify-content: space-between;
+        &:hover{
+            background-color: variables.$hoverContactColor;
+            cursor: pointer;
+        }
+        &--figure{
+            width: 12%;
+            height: 45px;
+            @include mixins.img;
+            img {
+                border-radius: 50%;
+            }
+        }
+    }
+    &__description{
+        width: 85%;
+        &--up{
+            @include mixins.flexAndSpaceBetween;
+        }
+        &--down{
+            @include mixins.flexAndSpaceBetween;
+            img {
+                width: 5%;
+            }
+        }
+    }
+    &__menssages{
+        width: 100%;
+        position: relative;
+        padding: 1%;
+        height: 90%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        background-image: variables.$backgroungImageURL;
+        background-color: variables.$backgroundChatColor;
+    }
+    &__input{
+        @include mixins.flexAndItemsCenter;
+        width: 100%;
+        height: 10%;
+        justify-content: space-around;
+        background-color: hsl(0, 0%, 95%);
+        padding-top: 2%;
+        padding-bottom: 2%;
+        input {
+            width: 80%;
+            border: none;
+            border-radius: 25px;
+            height: 40px;
+            &:focus{
+                @include mixins.focusNone;
+            }
+        }
+        &--figure{
+            width: 2%;
+            @include mixins.flexAndItemsCenter;
+            @include mixins.img;
+        }
+    }
+}

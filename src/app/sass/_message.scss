@@ -1,0 +1,50 @@
+@use 'variables';
+@use 'mixins';
+
+.message{
+    &__box{
+        position:relative;
+        display: flex;
+        width: 100%;
+        margin: 5px 0;
+        p{
+            position:relative;
+            right: 0;
+            text-align: right;
+            max-width: 65%;
+            padding: 12px;
+            background: variables.$menssageColor;
+            border-radius: 10px;
+            font-size: 0.9em;
+            span {
+                @include mixins.flexAndItemsCenter;
+                justify-content: space-between;
+                max-width: 50px;
+                font-size: 0.8em;
+                color: variables.$seeTextColor;
+            }
+        }
+    }
+    &__my {
+        justify-content: flex-end;
+    }
+    &__friend{
+        justify-content: flex-start;
+        p {
+            background: variables.$friendMessageColor;
+        }
+    }
+    &__see{
+        width: 30%;
+    }
+}
+
+.message__box.message__my p::before {
+    content : '';
+    position: absolute;
+    top: 0;
+    right: -12px;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, variables.$menssageColor 0%, variables.$menssageColor 50%, transparent 50%, transparent);
+}

@@ -1,0 +1,13 @@
+@use 'message';
+@use 'chat';
+@use 'chats';
+@use 'main';
+@use 'header';
+@use 'body'; 
+@use 'variables';
+
+* {
+    font-family: variables.$fontFamily;
+    margin: 0;
+    box-sizing: border-box;
+}
