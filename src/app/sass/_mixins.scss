@@ -20,3 +20,9 @@
     outline: none;
     box-shadow: none;
 }
+
+@mixin circleImage {
+    img {
+        border-radius: 50%;
+    }
+}

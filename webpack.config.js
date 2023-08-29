@@ -5,11 +5,14 @@ const webpack = require('webpack')
 
 module.exports = {
     entry: {
-        index: path.resolve(__dirname, './src/app/index.js'),
+        index: path.resolve(__dirname, './src/app/js/index.js'),
+        register: path.resolve(__dirname, './src/app/js/register.js'),
+        chat: path.resolve(__dirname, './src/app/js/chat.js'),
+        sweetalert: path.resolve(__dirname, './src/app/js/sweetalert.js'),
     },
     output: {
         path: path.resolve(__dirname, './dist'),
-        filename: 'index.bundle.js',
+        filename: '[name].bundle.js',
     },
     module: {
         rules: [
@@ -49,18 +52,21 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'Sprint 2 Whatsapp',
+            title: 'Index',
             template: path.resolve(__dirname, './src/index.html'),
+            chunks:['index','sweetalert'],
             filename: 'index.html',
         }),
         new HtmlWebpackPlugin({
-            title: 'Sprint 2 Whatsapp',
+            title: 'Chat',
             template: path.resolve(__dirname, './src/app/pages/chat.html'),
+            chunks:['chat','sweetalert'],
             filename: 'chat.html',
         }),
         new HtmlWebpackPlugin({
-            title: 'Sprint 2 Whatsapp',
+            title: 'Register',
             template: path.resolve(__dirname, './src/app/pages/register.html'),
+            chunks:['register','sweetalert'],
             filename: 'register.html',
         }),
         new CleanWebpackPlugin(),

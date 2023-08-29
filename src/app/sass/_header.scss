@@ -20,6 +20,7 @@
             margin: 0;
             width: 12%;
             @include mixins.img;
+            @include mixins.circleImage;
         }
     }
     &__chat{
@@ -37,6 +38,7 @@
             @include mixins.flexAndItemsCenter;
             margin: 0;
             @include mixins.img;
+            @include mixins.circleImage;
         }
         
         &--text{

@@ -18,9 +18,7 @@
             width: 12%;
             height: 45px;
             @include mixins.img;
-            img {
-                border-radius: 50%;
-            }
+            @include mixins.circleImage;
         }
     }
     &__description{
