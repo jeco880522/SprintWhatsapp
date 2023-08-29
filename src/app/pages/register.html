@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./app/style.css">
-    <title>Login</title>
+    <link rel="stylesheet" href="../style.css">
+    <title>Registro</title>
 </head>
 <body class="body__general">
     <div class="login__container">
         <div class="login__box">
-            <img src="../src/images/whatsapp-logo.png" alt="WhatsApp Logo" class="login__logo">
-            <form class="login-form">
+            <img src="../../images/whatsapp-logo.png" alt="WhatsApp Logo" class="login__logo">
+            <form class="login__form" action="index.html">
+                <input type="text" placeholder="Usuario" class="login__input--field" required>
                 <input type="number" placeholder="Número de teléfono" class="login__input--field" required>
                 <input type="password" placeholder="Contraseña" class="login__input--field" required>
-                <button type="submit" class="login__button">Iniciar sesión</button>
-                <p>¿No tienes cuenta?<a href="register.html" class="login__registro"> Registrate</a></p>
+                <input type="email" placeholder="Email" class="login__input--field" required>
+                <button type="submit" class="login__button">Registrarse</button>
             </form>
         </div>
     </div>

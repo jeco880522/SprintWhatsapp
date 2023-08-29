@@ -1,6 +1,15 @@
-.body__container{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100vh;
+@use "variables";
+
+.body{
+    &__container{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100vh;
+    }
+    &__general {
+        margin: 0;
+        font-family: variables.$main-font;
+        background-image: variables.$url-fondow;
+    }
 }

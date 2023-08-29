@@ -5,11 +5,11 @@ const webpack = require('webpack')
 
 module.exports = {
     entry: {
-        main: path.resolve(__dirname, './src/app/index.js'),
+        index: path.resolve(__dirname, './src/app/index.js'),
     },
     output: {
         path: path.resolve(__dirname, './dist'),
-        filename: 'main.bundle.js',
+        filename: 'index.bundle.js',
     },
     module: {
         rules: [
@@ -52,6 +52,16 @@ module.exports = {
             title: 'Sprint 2 Whatsapp',
             template: path.resolve(__dirname, './src/index.html'),
             filename: 'index.html',
+        }),
+        new HtmlWebpackPlugin({
+            title: 'Sprint 2 Whatsapp',
+            template: path.resolve(__dirname, './src/app/pages/chat.html'),
+            filename: 'chat.html',
+        }),
+        new HtmlWebpackPlugin({
+            title: 'Sprint 2 Whatsapp',
+            template: path.resolve(__dirname, './src/app/pages/register.html'),
+            filename: 'register.html',
         }),
         new CleanWebpackPlugin(),
         new webpack.HotModuleReplacementPlugin(),
