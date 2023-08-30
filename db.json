@@ -1,19 +1,15 @@
 {
-  "posts": [
+  "users": [
     {
       "id": 1,
-      "title": "json-server",
-      "author": "typicode"
+      "nombre": "Wilmer Rodolfo Castro Ladino",
+      "celular": "+573152143550",
+      "password": "123456789",
+      "image": "",
+      "state": "",
+      "info": "",
+      "fechaConexion": "",
+      "horaConexion": ""
     }
-  ],
-  "comments": [
-    {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
-    }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+  ]
 }

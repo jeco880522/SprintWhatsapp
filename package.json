@@ -6,11 +6,11 @@
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "start": "webpack --mode development",
+    "start": "webpack --mode development && json-server --watch ./db.json --host 0.0.0.0 --port 3001",
     "build": "webpack --mode production",
-    "dev": "webpack serve --open",
+    "dev": "concurrently \"webpack serve --open\" \"json-server --watch ./db.json --host 0.0.0.0 --port 3001\"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "json-server": "json-server --watch db.json --port 3001"
+    "json-server": "json-server --watch ./db.json --host 0.0.0.0 --port 3001"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +21,7 @@
     "@babel/preset-env": "^7.18.0",
     "babel-loader": "^8.2.5",
     "clean-webpack-plugin": "^4.0.0",
+    "concurrently": "^8.2.1",
     "css-loader": "^6.7.1",
     "html-loader": "^4.2.0",
     "html-webpack-plugin": "^5.5.0",
