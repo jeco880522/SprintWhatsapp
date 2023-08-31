@@ -45,9 +45,7 @@ module.exports = {
     mode: 'development',
     devServer: {
         historyApiFallback: true,
-        static: {
-            directory: path.join(__dirname, './dist'),
-        },
+        contentBase: path.join(__dirname, './dist'),
         open: true,
         compress: true,
         port: 8080,
