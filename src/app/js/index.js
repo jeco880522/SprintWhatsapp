@@ -1,7 +1,7 @@
 import "../sass/style.scss";
 import { userByPhone } from "./services/users.js";
 import { cleanDataForm } from "./helpers/functions.js";
-import { messageSuccess, messageError } from "./sweetalert";
+import { messageSuccess, messageError } from "./sweetalert.js";
 const formLogin = document.getElementById('login');
 
 function initLogin() {
@@ -10,8 +10,6 @@ function initLogin() {
         captureLoginData();
     });
 }
-
-
 
 initLogin();
 

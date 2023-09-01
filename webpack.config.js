@@ -8,11 +8,21 @@ module.exports = {
         index: path.resolve(__dirname, './src/app/js/index.js'),
         register: path.resolve(__dirname, './src/app/js/register.js'),
         chat: path.resolve(__dirname, './src/app/js/chat.js'),
+        users: path.resolve(__dirname, './src/app/js/services/users.js'),
+        functions: path.resolve(__dirname, './src/app/js/helpers/functions.js'),
         sweetalert: path.resolve(__dirname, './src/app/js/sweetalert.js'),
     },
     output: {
         path: path.resolve(__dirname, './dist'),
-        filename: '[name].bundle.js',
+        filename: (chunkData)=>{
+            let outputPath = '';
+            if (chunkData.chunk.name === 'users') {
+                outputPath = 'services/';
+            } else if (chunkData.chunk.name === 'functions') {
+                outputPath = 'helpers/';
+            }
+            return `${outputPath}[name].js`;
+        }
     },
     module: {
         rules: [
@@ -37,7 +47,7 @@ module.exports = {
             type: 'asset/inline',
         },
         {
-            test: /\.(scss|css)$/,
+            test: /\.s?[ac]ss$/i,
             use: ['style-loader', 'css-loader', 'sass-loader'],
         },
         ],

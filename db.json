@@ -10,6 +10,32 @@
       "info": "",
       "fechaConexion": "",
       "horaConexion": ""
+    },
+    {
+      "id": 2,
+      "nombre": "Juan Pablo Contreras Ospina",
+      "celular": "3105535293",
+      "password": "123456789",
+      "image": "",
+      "state": "",
+      "info": "",
+      "fechaConexion": "",
+      "horaConexion": ""
+    }
+  ],
+  "menssages":[
+    {
+      "idUser1": 1,
+      "idUser2": 2,
+      "consersation":[
+        {
+          "sendBy": 1,
+          "date": "",
+          "hour": "",
+          "message": "",
+          "flag": ""
+        }
+      ]
     }
   ]
 }
