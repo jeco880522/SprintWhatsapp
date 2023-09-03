@@ -2,16 +2,16 @@ import axios from "axios";
 import { messageError } from "../sweetalert.js";
 import {urlDev} from '../helpers/variables.js';
 
-export const userByPhone = async (phone) => {
+export const getMessagesUser = async (conversationId) => {
     try {
-        const response = await axios.get(urlDev + '/users?celular=' + phone);
-        const checkAttribute = response.data.some(data => 'celular' in data);
+        const response = await axios.get(urlDev + '/messages?conversationId=' + conversationId);
+        const checkAttribute = response.data.some(data => 'conversationId' in data);
         if(response.status !== 200){
             throw new Error('Error en la respuesta HTTP: ' + response.status);
         }else if (!checkAttribute) {
-            throw new Error('Telefono ' + phone + ' No Registrado');
+            throw new Error('No existe la conversacion');
         }else {
-            return response.data[0];
+            return response.data;
         }
     } catch(e) {
         messageError(

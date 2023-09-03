@@ -4,38 +4,74 @@
       "id": 1,
       "nombre": "Wilmer Rodolfo Castro Ladino",
       "celular": "3152143550",
-      "password": "123456789",
+      "password": "123",
       "image": "",
       "state": "",
       "info": "",
-      "fechaConexion": "",
-      "horaConexion": ""
+      "fechaConexion": ""
     },
     {
       "id": 2,
       "nombre": "Juan Pablo Contreras Ospina",
       "celular": "3105535293",
-      "password": "123456789",
+      "password": "123",
       "image": "",
       "state": "",
       "info": "",
-      "fechaConexion": "",
-      "horaConexion": ""
+      "fechaConexion": ""
+    },
+    {
+      "id": 3,
+      "nombre": "Sara Estrella Ladino Pinzon",
+      "celular": "3186497910",
+      "password": "123",
+      "image": "",
+      "state": "",
+      "info": "",
+      "fechaConexion": ""
     }
   ],
-  "menssages":[
+  "conversations":[
     {
+      "id": 1,
       "idUser1": 1,
-      "idUser2": 2,
-      "consersation":[
-        {
-          "sendBy": 1,
-          "date": "",
-          "hour": "",
-          "message": "",
-          "flag": ""
-        }
-      ]
+      "idUser2": 2
+    },
+    {
+      "id": 2,
+      "idUser1": 2,
+      "idUser2": 3
+    },
+    {
+      "id": 3,
+      "idUser1": 3,
+      "idUser2": 1
+    }
+  ],
+  "messages":[
+    {
+      "id":1,
+      "conversationId": 1,
+      "userId": 1,
+      "date": "2023-08-31T10:05:00",
+      "message": "Hola Hermoso",
+      "flag": "true"
+    },
+    {
+      "id":2,
+      "conversationId": 1,
+      "userId": 2,
+      "date": "2023-08-31T10:05:00",
+      "message": "Hola Hermoso",
+      "flag": "true"
+    },
+    {
+      "id":3,
+      "conversationId": 2,
+      "userId": 2,
+      "date": "2023-08-31T10:05:00",
+      "message": "Hola Hermoso",
+      "flag": "true"
     }
   ]
 }

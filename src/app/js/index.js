@@ -16,13 +16,15 @@ initLogin();
 async function captureLoginData(){
     let formLoginData = new FormData(formLogin);
     formLoginData = cleanDataForm(formLoginData);
-    console.log(formLoginData);
     try {
         let dataUser = await userByPhone(formLoginData.phone);
         if(dataUser.password === formLoginData.password){
             await messageSuccess(
-                "Inicio Sesion con Exito", 
-                ()=> { window.location.href = 'chat.html'; }
+                `Bienvenido, ${dataUser.nombre}`, 
+                ()=> { 
+                    window.location.href = 'chat.html';
+                    localStorage.setItem('idUser', dataUser.id); 
+                }
             );
         }else{
             await messageError(

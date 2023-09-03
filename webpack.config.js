@@ -11,6 +11,7 @@ module.exports = {
         users: path.resolve(__dirname, './src/app/js/services/users.js'),
         functions: path.resolve(__dirname, './src/app/js/helpers/functions.js'),
         sweetalert: path.resolve(__dirname, './src/app/js/sweetalert.js'),
+        variables: path.resolve(__dirname, './src/app/js/helpers/variables.js'),
     },
     output: {
         path: path.resolve(__dirname, './dist'),
@@ -18,7 +19,7 @@ module.exports = {
             let outputPath = '';
             if (chunkData.chunk.name === 'users') {
                 outputPath = 'services/';
-            } else if (chunkData.chunk.name === 'functions') {
+            } else if (chunkData.chunk.name === 'functions' || chunkData.chunk.name === 'variables') {
                 outputPath = 'helpers/';
             }
             return `${outputPath}[name].js`;
