@@ -29,9 +29,19 @@
       "state": "",
       "info": "",
       "fechaConexion": ""
+    },
+    {
+      "nombre": "juan de jesus",
+      "celular": "12345",
+      "password": "12345",
+      "image": "https://www.deepl.com/es/translator#es/en/%C2%BFNo%20tienes%20cuenta%3F",
+      "info": "con Dios todo se podrá",
+      "state": "",
+      "fechaConexion": "",
+      "id": 4
     }
   ],
-  "conversations":[
+  "conversations": [
     {
       "id": 1,
       "idUser1": 1,
@@ -48,9 +58,9 @@
       "idUser2": 1
     }
   ],
-  "messages":[
+  "messages": [
     {
-      "id":1,
+      "id": 1,
       "conversationId": 1,
       "userId": 1,
       "date": "2023-08-31T10:05:00",
@@ -58,7 +68,7 @@
       "flag": "true"
     },
     {
-      "id":2,
+      "id": 2,
       "conversationId": 1,
       "userId": 2,
       "date": "2023-08-31T10:05:00",
@@ -66,7 +76,7 @@
       "flag": "true"
     },
     {
-      "id":3,
+      "id": 3,
       "conversationId": 2,
       "userId": 2,
       "date": "2023-08-31T10:05:00",

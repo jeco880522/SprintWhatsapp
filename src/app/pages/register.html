@@ -10,12 +10,13 @@
     <main class="login__container">
         <section class="login__box">
             <img src="../../images/whatsapp-logo.png" alt="WhatsApp Logo" class="login__logo">
-            <form class="login__form" action="index.html">
-                <input type="text" placeholder="Usuario" class="login__input--field" required>
-                <input type="number" placeholder="Número de teléfono" class="login__input--field" required>
-                <input type="password" placeholder="Contraseña" class="login__input--field" required>
-                <input type="email" placeholder="Email" class="login__input--field" required>
-                <button type="submit" class="login__button">Registrarse</button>
+            <form id="register"  class="login__form" >
+                <input name="nombre" type="text" placeholder="Nombre" class="login__input--field" required>
+                <input name="celular" type="number" placeholder="Número de teléfono" class="login__input--field" required>
+                <input name="password" type="password" placeholder="Contraseña" class="login__input--field" required>
+                <input name="image" type="url" placeholder="Url Imagen" class="login__input--field" required>
+                <textarea name="info" class="login__input--field" rows="3"  required></textarea>
+                <button type="submit" class="login__button">Sign up</button>
             </form>
         </section>
     </main>

@@ -2,6 +2,25 @@ import axios from "axios";
 import { messageError } from "../sweetalert.js";
 import {urlDev} from '../helpers/variables.js';
 
+export const createUser = async(data) =>{
+    try {
+        const response = await axios.post(urlDev + '/users' ,data, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        if(response.status !== 201){
+            throw new Error('Error en la respuesta HTTP: ' + response.status);
+        }else {
+            return response;
+        }
+    } catch (error) {
+        messageError(
+            e.message
+        );
+    }
+}
+
 export const userByPhone = async (phone) => {
     try {
         const response = await axios.get(urlDev + '/users?celular=' + phone);
@@ -13,6 +32,6 @@ export const userByPhone = async (phone) => {
     } catch(e) {
         messageError(
             e.message
-        )
+        );
     }
 }
