@@ -20,7 +20,7 @@ async function captureLoginData(){
         let dataUser = await userByPhone(formLoginData.phone);
         const checkAttribute = dataUser.some(data => 'celular' in data);
         if (!checkAttribute) {
-            throw new Error('Telefono ' + formLoginData.phone + ' No Registrado');
+            throw new Error(`Telefono ${formLoginData.phone} No Registrado`);
         }else {
             let dataUser = dataUser[0];
         }
@@ -28,8 +28,8 @@ async function captureLoginData(){
             await messageSuccess(
                 `Bienvenido, ${dataUser.nombre}`, 
                 ()=> { 
-                    window.location.href = 'chat.html';
                     localStorage.setItem('idUser', dataUser.id); 
+                    window.location.href = 'chat.html';
                 }
             );
         }else{
