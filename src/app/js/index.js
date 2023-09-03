@@ -22,7 +22,7 @@ async function captureLoginData(){
         if (!checkAttribute) {
             throw new Error(`Telefono ${formLoginData.phone} No Registrado`);
         }else {
-            let dataUser = dataUser[0];
+            dataUser = dataUser[0];
         }
         if(dataUser.password === formLoginData.password){
             await messageSuccess(
