@@ -18,6 +18,12 @@ async function captureLoginData(){
     formLoginData = cleanDataForm(formLoginData);
     try {
         let dataUser = await userByPhone(formLoginData.phone);
+        const checkAttribute = dataUser.some(data => 'celular' in data);
+        if (!checkAttribute) {
+            throw new Error('Telefono ' + phone + ' No Registrado');
+        }else {
+            let dataUser = dataUser[0];
+        }
         if(dataUser.password === formLoginData.password){
             await messageSuccess(
                 `Bienvenido, ${dataUser.nombre}`, 
