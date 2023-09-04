@@ -1,8 +1,7 @@
 import "../sass/style.scss";
-import { createUser } from "./services/users";
-import { cleanDataForm } from "./helpers/functions";
-import { messageSuccess,messageError } from "./sweetalert";
-import { userByPhone } from "./services/users";
+import { cleanDataForm } from "./helpers/functions.js";
+import { messageSuccess,messageError } from "./sweetalert.js";
+import { userByPhone, createUser} from "./services/users.js";
 
 const formRegister = document.getElementById('register');
 

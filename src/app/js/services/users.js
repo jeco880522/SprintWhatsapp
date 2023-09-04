@@ -35,3 +35,18 @@ export const userByPhone = async (phone) => {
         );
     }
 }
+
+export const userById = async (id) => {
+    try {
+        const response = await axios.get(urlDev + '/users/' + id);
+        if(response.status !== 200){
+            throw new Error('Error en la respuesta HTTP: ' + response.status);
+        } else {
+            return response.data;
+        }
+    } catch(e) {
+        messageError(
+            e.message
+        );
+    }
+}

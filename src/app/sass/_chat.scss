@@ -5,6 +5,13 @@
     &__container {
         width: 70%;
         height: 100%;
+        @media (max-width: 600px)  {
+            display: none;
+            width: 100%;
+        }
+        @media screen and (min-width: 600px ) and (max-width: 820px ) {
+            width: 50%;
+        }
     }
     &__contact{
         @include mixins.flexAndItemsCenter;
