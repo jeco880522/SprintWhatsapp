@@ -13,6 +13,6 @@ export const getMessagesUser = async (conversationId) => {
     } catch(e) {
         messageError(
             e.message
-        )
+        );
     }
 }

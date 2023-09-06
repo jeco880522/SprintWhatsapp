@@ -15,6 +15,21 @@ export const getConversationsUser = async (idUser) => {
     } catch(e) {
         messageError(
             e.message
-        )
+        );
+    }
+}
+
+export const getConversationById = async (id) => {
+    try {
+        const response = await axios.get(urlDev + '/conversations/' + id);
+        if(response.status !== 200){
+            throw new Error('Error en la respuesta HTTP: ' + response.status);
+        }else {
+            return response.data;
+        }
+    } catch(e) {
+        messageError(
+            e.message
+        );
     }
 }

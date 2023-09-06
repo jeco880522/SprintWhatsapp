@@ -6,6 +6,14 @@ export function cleanDataForm(formData){
     return data;
 }
 
+export function convertFormatDateMessage(fechaHora) {
+    const partes = fechaHora.split('T');
+    const fecha = partes[0];
+    const hora = partes[1].slice(0, 5); // Tomar solo las primeras 5 caracteres (hh:mm)
+    const [anio, mes, dia] = fecha.split('-');
+    return `${hora}`;
+}
+
 export function convertDateFormat(date) {
     const auxDate = new Date(date);
     const today = new Date();
