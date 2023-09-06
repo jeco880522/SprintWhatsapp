@@ -39,6 +39,16 @@
       "state": "false",
       "fechaConexion": "",
       "id": 4
+    },
+    {
+      "nombre": "Peter Laangila",
+      "celular": "123456",
+      "password": "123456",
+      "image": "https://www.blogdelfotografo.com/wp-content/uploads/2022/01/retrato-anillo-luz.webp",
+      "info": "Soy lo mejor XD",
+      "state": "",
+      "fechaConexion": "",
+      "id": 5
     }
   ],
   "conversations": [
@@ -68,7 +78,7 @@
       "id": 1,
       "conversationId": 1,
       "userId": 1,
-      "date": "2023-08-31T10:43:43",
+      "date": "2023-09-04T10:43:43",
       "message": "Hola",
       "flag": "true"
     },
@@ -76,7 +86,7 @@
       "id": 2,
       "conversationId": 1,
       "userId": 2,
-      "date": "2023-08-31T10:40:40",
+      "date": "2023-09-04T10:40:40",
       "message": "Hola",
       "flag": "true"
     },
@@ -84,7 +94,7 @@
       "id": 3,
       "conversationId": 1,
       "userId": 2,
-      "date": "2023-08-31T10:58:45",
+      "date": "2023-09-04T10:58:02",
       "message": "¿Como estas?",
       "flag": "true"
     },
@@ -102,6 +112,22 @@
       "userId": 1,
       "date": "2023-09-04T10:55:03",
       "message": "Hola 5",
+      "flag": "false"
+    },
+    {
+      "id": 6,
+      "conversationId": 3,
+      "userId": 1,
+      "date": "2023-09-04T10:25:03",
+      "message": "Hola",
+      "flag": "false"
+    },
+    {
+      "id": 7,
+      "conversationId": 4,
+      "userId": 2,
+      "date": "2023-09-04T10:58:03",
+      "message": "Hola 6",
       "flag": "false"
     }
   ]

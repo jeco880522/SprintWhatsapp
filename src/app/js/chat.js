@@ -2,7 +2,7 @@ import "../sass/style.scss";
 import { convertDateFormat, convertFormatDateMessage } from "./helpers/functions.js";
 import { userById } from "./services/users.js";
 import { getConversationsUser,getConversationById } from "./services/conversations.js";
-import { getMessagesUser } from "./services/messages.js";
+import { getMessagesUser, getListMessages } from "./services/messages.js";
 import { messageError } from "./sweetalert.js";
 
 const chatsContacts = document.querySelector('.chats__contacts');
@@ -10,23 +10,41 @@ const chatsContainer = document.querySelector('.chats__container');
 const chatContainer = document.querySelector('.chat__container');
 const headerUser = document.querySelector('.header__user');
 const headerChat = document.querySelector('.header__chat');
-const homeModal = document.querySelector('.home__modal');
 const idUser = localStorage.getItem('idUser');
 const chatMessages = document.querySelector('.chat__menssages');
 
 document.addEventListener("DOMContentLoaded", function() {
-    buildChatsContacts();
+    buildHome();
 });
 
-async function buildChatsContacts(){
+async function buildHome(){
     try {
         let conversations =  await getConversationsUser(idUser);
+        if(conversations.length === 0){
+            throw new Error('El Usuario no tiene Contactos');
+        }
         let dataUser = await userById(idUser);
         document.querySelector('.header__user--figure img').src = dataUser.image;
-        conversations.forEach( async (conversation) => {
+        let lastMessagesReceived = [];
+        const bringLatestMessages = conversations.map( async (conversation) => {
             let messages =  await getMessagesUser(conversation.id);
-            messages = messages.sort((a, b) => new Date(b.date) - new Date(a.date));
-            console.log("message",messages);
+            messages = messages.sort((a, b) => {return new Date(b.date) - new Date(a.date)});
+            lastMessagesReceived.push(messages[0]);
+        });
+        await Promise.all(bringLatestMessages);
+        lastMessagesReceived = lastMessagesReceived.sort((a, b) =>{ return new Date(b.date) - new Date(a.date)});
+        const mapaOrdenDeseado = new Map();
+        lastMessagesReceived.forEach((elemento, indice) => {
+            mapaOrdenDeseado.set(elemento.conversationId, indice);
+        });
+        conversations.sort((a, b) => {
+            const indiceA = mapaOrdenDeseado.get(a.id) || 0;
+            const indiceB = mapaOrdenDeseado.get(b.id) || 0;
+            return indiceA - indiceB;
+        });
+        const buildChatContacts = conversations.map( async (conversation) => {
+            let messages =  await getMessagesUser(conversation.id);
+            messages = messages.sort((a, b) => {return new Date(b.date) - new Date(a.date)});
             let date = convertDateFormat(messages[0].date);
             let dataContact = await getDataUserContact(conversation,idUser);
             let name = dataContact.nombre.split(" ")[0];
@@ -35,29 +53,26 @@ async function buildChatsContacts(){
             let idElement = 'C'+conversation.id+'C';
             let image = dataContact.image;
             chatsContacts.innerHTML += `
-                <div id="${idElement}" class="chat__contact">
-                    <figure class="chat__contact--figure">
-                        <img src=${image} alt="">
-                    </figure>
-                    <div class="chat__description">
-                        <div class="chat__description--up">
-                            <p>${name}</p>
-                            <p>${date}</p>
-                        </div>
-                        <div class="chat__description--down">
-                            <img src=${flag === true ? 'https://i.ibb.co/1ZY2Jfh/see-hidden.png' : 'https://i.ibb.co/StygMHQ/see.png'}" alt="">
-                            <p>${message}</p>
-                        </div>
+            <div id="${idElement}" class="chat__contact">
+                <figure class="chat__contact--figure">
+                    <img src=${image} alt="">
+                </figure>
+                <div class="chat__description">
+                    <div class="chat__description--up">
+                        <p>${name}</p>
+                        <p>${date}</p>
                     </div>
-                </div>`;
+                    <div class="chat__description--down">
+                        <img src=${flag === true ? 'https://i.ibb.co/1ZY2Jfh/see-hidden.png' : 'https://i.ibb.co/StygMHQ/see.png'}" alt="">
+                        <p>${message}</p>
+                    </div>
+                </div>
+            </div>
+            `;
         });
+        await Promise.all(buildChatContacts);
         addEventContact();
-        document.querySelector('.header__chat__back--figure').addEventListener("click", function(){
-            chatContainer.style.display = 'none';
-            headerChat.style.display = 'none';
-            headerUser.style.display = 'flex';
-            chatsContainer.style.display = 'flex';
-        });
+        hiddenChatWithMessage(lastMessagesReceived[0].conversationId);
     } catch (error) {
         messageError(error.message);
     }
@@ -79,22 +94,15 @@ async function getDataUserContact(conversation, idUser){
 }
 
 function addEventContact() {
-    const observer = new MutationObserver(function(mutationsList, observer) {
-        for (let mutation of mutationsList) {
-            if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-                let containerArray = document.querySelectorAll('.chat__contact');
-                if(containerArray.length > 0){
-                    containerArray.forEach(function (container) {
-                        const id = container.id;
-                        document.getElementById(id).addEventListener("click", function () {
-                            hiddenChatWithMessage(id.replace('C','').replace('C',''));
-                        });
-                    });
-                }
-            }
-        }
-    });
-    observer.observe(chatsContacts, { childList: true });
+    let containerArray = document.querySelectorAll('.chat__contact');
+    if(containerArray.length > 0){
+        containerArray.forEach(function (container) {
+            const id = container.id;
+            document.getElementById(id).addEventListener("click", function () {
+                hiddenChatWithMessage(id.replace('C','').replace('C',''));
+            });
+        });
+    }
 }
 
 async function hiddenChatWithMessage(idConsersation){
@@ -104,8 +112,6 @@ async function hiddenChatWithMessage(idConsersation){
             headerChat.style.display = 'flex';
             headerUser.style.display = 'none';
             chatsContainer.style.display = 'none';
-        } else {
-            homeModal.style.display = 'none';
         }
         let conversationData = await getConversationById(idConsersation);
         let userChat = await getDataUserContact(conversationData, idUser);
@@ -142,15 +148,21 @@ async function hiddenChatWithMessage(idConsersation){
 window.addEventListener('resize', function(){
     if (window.innerWidth > 600) {
         if(chatContainer.style.display === 'block' && headerChat.style.display === 'flex'){
-            homeModal.style.display = 'none';
             headerUser.style.display = 'flex';
             chatsContainer.style.display = 'flex';
         }
     }else{
         if(chatContainer.style.display === 'block' && headerChat.style.display === 'flex'){
-            homeModal.style.display = 'none';
             headerUser.style.display = 'none';
             chatsContainer.style.display = 'none';
         }
     }
+});
+
+document.querySelector('.header__chat__back--figure').addEventListener("click", function(){
+    chatMessages.innerHTML = '';
+    chatContainer.style.display = 'none';
+    headerChat.style.display = 'none';
+    headerUser.style.display = 'flex';
+    chatsContainer.style.display = 'flex';
 });

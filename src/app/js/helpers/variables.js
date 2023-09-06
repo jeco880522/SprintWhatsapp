@@ -1,2 +1,2 @@
-export const urlDev = 'http://localhost:3001';
-export const urlProdu = 'https://sprintwhatsapp.up.railway.app';
+const production = false;
+export const url =  production === false ? 'http://localhost:3001' : 'https://sprintwhatsapp.up.railway.app';
