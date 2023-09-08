@@ -1,9 +1,9 @@
 import "../sass/style.scss";
-import { convertDateFormat, convertFormatDateMessage } from "./helpers/functions.js";
+import { convertDateFormat, convertFormatDateMessage, getCurrentDateInFormat } from "./helpers/functions.js";
 import { userById } from "./services/users.js";
 import { getConversationsUser,getConversationById } from "./services/conversations.js";
-import { getMessagesUser, getListMessages } from "./services/messages.js";
-import { messageError } from "./sweetalert.js";
+import { getMessagesUser, sendMessageUser } from "./services/messages.js";
+import { messageError, messageInfo } from "./sweetalert.js";
 
 const chatsContacts = document.querySelector('.chats__contacts');
 const chatsContainer = document.querySelector('.chats__container');
@@ -66,17 +66,89 @@ async function buildHome(){
                         <img src=${flag === true ? 'https://i.ibb.co/1ZY2Jfh/see-hidden.png' : 'https://i.ibb.co/StygMHQ/see.png'}" alt="">
                         <p>${message}</p>
                     </div>
-                </div>
-            </div>
-            `;
-        });
-        await Promise.all(buildChatContacts);
-        addEventContact();
-        hiddenChatWithMessage(lastMessagesReceived[0].conversationId);
+                    </div>
+                    </div>
+                    `;
+                });
+                await Promise.all(buildChatContacts);
+                addEventContact();
+                hiddenChatWithMessage(lastMessagesReceived[0].conversationId);
+                addEventFindContact();
+                addEventSendMessage();
     } catch (error) {
         messageError(error.message);
+        console.error(error);
     }
 }
+
+function addEventFindContact(){
+    document.querySelector('.chats__search--input input').addEventListener("keydown", function (event) { 
+        if (event.keyCode === 13) { 
+            event.preventDefault();
+            findContact();
+        }
+    });
+    document.querySelector('.chats__search--figure').addEventListener('click', function(){findContact();});
+}
+
+function addEventSendMessage(){
+    document.querySelector('.chat__input textarea').addEventListener('keydown',function(event){
+        if (event.keyCode === 13 && !event.shiftKey) { 
+            event.preventDefault();
+            sendMessage(this.value);
+            this.value = '';
+        }
+    });
+}
+
+async function sendMessage(message){
+    try {
+        let data = {
+            conversationId: parseInt(document.querySelector('.chat__input textarea').id.replace('CON','')),
+            userId: parseInt(idUser),
+            date: getCurrentDateInFormat(),
+            message: message,
+            flag: "false"
+        };
+        let response = await sendMessageUser(data);
+        console.log(response);
+        if(response){
+            chatMessages.innerHTML += `
+            <div class="message__box message__my">
+                <p>${data.message.replace(new RegExp('\n', 'g'), '<br>')}
+                    <span>${convertFormatDateMessage(data.date)}
+                        <img class="message__see" src=${data.flag === 'true' ? 'https://i.ibb.co/1ZY2Jfh/see-hidden.png' : 'https://i.ibb.co/StygMHQ/see.png'} alt="">
+                    </span>
+                </p>
+            </div>
+            `;
+        }else{
+            throw new Error('El Error al enviar el mensaje, intentelo mas tarde');
+        }
+    } catch (error) {
+        messageError(error.message);
+        console.error(error);
+    }
+}
+
+async function findContact () {
+    let nodeListChatContact = document.querySelectorAll('.chat__contact');
+    let arrayChatContact = [...nodeListChatContact];
+    let searchValue = document.querySelector('.chats__search--input input').value.trimRight();
+    document.querySelector('.chats__search--input input').value = document.querySelector('.chats__search--input input').value.trimRight();
+    const comparison = (description) => description.querySelector('.chat__description').querySelector('.chat__description--up p').textContent === searchValue || description.querySelector('.chat__description').querySelector('.chat__description--down p').textContent === searchValue;
+    const elementFound = arrayChatContact.find(comparison);
+    if (elementFound!== undefined) {
+        nodeListChatContact.forEach(element => {
+            if(element.id !== elementFound.id){
+                element.style.display = 'none';
+            }
+        });
+    } else {
+        await messageInfo('No se encontraron resultados');
+    }
+}
+
 
 async function getDataUserContact(conversation, idUser){
     try {
@@ -90,6 +162,7 @@ async function getDataUserContact(conversation, idUser){
         return dataUser;
     } catch (error) {
         messageError(error.message);
+        console.error(error);
     }
 }
 
@@ -107,6 +180,15 @@ function addEventContact() {
 
 async function hiddenChatWithMessage(idConsersation){
     try {
+        if(document.querySelector('.chats__search--input input').value.trimRight()!== ''){
+            let nodeListChatContact = document.querySelectorAll('.chat__contact');
+            nodeListChatContact.forEach(element => {
+                if(element.style.display === 'none'){
+                    element.style.display = 'flex';
+                }
+            });
+            document.querySelector('.chats__search--input input').value = '';
+        }
         if (window.innerWidth < 600) {
             chatContainer.style.display = 'block';
             headerChat.style.display = 'flex';
@@ -125,9 +207,9 @@ async function hiddenChatWithMessage(idConsersation){
             if (message.userId.toString() === idUser.toString()) {
                 chatMessages.innerHTML += `
                 <div class="message__box message__my">
-                    <p>${message.message}
+                    <p>${message.message.replace(new RegExp('\n', 'g'), '<br>')}
                         <span>${convertFormatDateMessage(message.date)}
-                            <img class="message__see" src="https://i.ibb.co/1ZY2Jfh/see-hidden.png" alt="">
+                            <img class="message__see" src=${message.flag === 'true' ? 'https://i.ibb.co/1ZY2Jfh/see-hidden.png' : 'https://i.ibb.co/StygMHQ/see.png'} alt="">
                         </span>
                     </p>
                 </div>
@@ -135,13 +217,15 @@ async function hiddenChatWithMessage(idConsersation){
             } else {
                 chatMessages.innerHTML += `
                 <div class="message__box message__friend">
-                    <p>${message.message}<br><span>${convertFormatDateMessage(message.date)}</span></p>
+                    <p>${message.message.replace(new RegExp('\n', 'g'), '<br>')}<br><span>${convertFormatDateMessage(message.date)}</span></p>
                 </div>
                 `;
             }
         });
+        document.querySelector('.chat__input textarea').id = 'CON'+ idConsersation;
     } catch (error) {
         messageError(error.message);
+        console.error(error);
     }
 }
 

@@ -53,3 +53,9 @@ function isSameWeek(date1, date2) {
     const differenceDays = Math.abs((date1 - date2) / oneDay);
     return differenceDays < 7;
 }
+
+export function getCurrentDateInFormat() {
+    const dateCurrent = new Date();
+    const dateFormatted = dateCurrent.toISOString().slice(0, 19).replace(' ', 'T');
+    return dateFormatted;
+}

@@ -17,15 +17,19 @@ export const getMessagesUser = async (conversationId) => {
     }
 }
 
-export const getListMessages = async () => {
+export const sendMessageUser = async (data) => {
     try {
-        const response = await axios.get(url + '/messages');
-        if(response.status !== 200){
+        const response = await axios.post(url + '/messages' ,data, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        if(response.status !== 201){
             throw new Error('Error en la respuesta HTTP: ' + response.status);
         }else {
-            return response.data;
+            return response;
         }
-    } catch(e) {
+    } catch (error) {
         messageError(
             e.message
         );
