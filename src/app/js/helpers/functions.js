@@ -17,10 +17,8 @@ export function convertFormatDateMessage(fechaHora) {
 export function convertDateFormat(date) {
     const auxDate = new Date(date);
     const today = new Date();
-    
     // Función para agregar un cero si el número es menor que 10
     const addZero = (number) => (number < 10 ? `0${number}` : number);
-
     if (isSameDay(auxDate, today)) {
         // Si es el mismo día actual, mostrar solo la hora
         const hour = addZero(auxDate.getHours());

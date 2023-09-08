@@ -4,14 +4,13 @@ import { userById } from "./services/users.js";
 import { getConversationsUser,getConversationById } from "./services/conversations.js";
 import { getMessagesUser, sendMessageUser } from "./services/messages.js";
 import { messageError, messageInfo } from "./sweetalert.js";
+import { printMessageUserLocal, printMessageFriend, cleanChat, printChatContact } from "./helpers/printElements.js";
 
-const chatsContacts = document.querySelector('.chats__contacts');
 const chatsContainer = document.querySelector('.chats__container');
 const chatContainer = document.querySelector('.chat__container');
 const headerUser = document.querySelector('.header__user');
 const headerChat = document.querySelector('.header__chat');
 const idUser = localStorage.getItem('idUser');
-const chatMessages = document.querySelector('.chat__menssages');
 
 document.addEventListener("DOMContentLoaded", function() {
     buildHome();
@@ -45,36 +44,21 @@ async function buildHome(){
         const buildChatContacts = conversations.map( async (conversation) => {
             let messages =  await getMessagesUser(conversation.id);
             messages = messages.sort((a, b) => {return new Date(b.date) - new Date(a.date)});
-            let date = convertDateFormat(messages[0].date);
             let dataContact = await getDataUserContact(conversation,idUser);
-            let name = dataContact.nombre.split(" ")[0];
-            let flag = messages[0].flag === "true"? true : false;
-            let message = messages[0].message;
-            let idElement = 'C'+conversation.id+'C';
-            let image = dataContact.image;
-            chatsContacts.innerHTML += `
-            <div id="${idElement}" class="chat__contact">
-                <figure class="chat__contact--figure">
-                    <img src=${image} alt="">
-                </figure>
-                <div class="chat__description">
-                    <div class="chat__description--up">
-                        <p>${name}</p>
-                        <p>${date}</p>
-                    </div>
-                    <div class="chat__description--down">
-                        <img src=${flag === true ? 'https://i.ibb.co/1ZY2Jfh/see-hidden.png' : 'https://i.ibb.co/StygMHQ/see.png'}" alt="">
-                        <p>${message}</p>
-                    </div>
-                    </div>
-                    </div>
-                    `;
-                });
-                await Promise.all(buildChatContacts);
-                addEventContact();
-                hiddenChatWithMessage(lastMessagesReceived[0].conversationId);
-                addEventFindContact();
-                addEventSendMessage();
+            printChatContact(
+                'C'+conversation.id+'C', 
+                dataContact.image,
+                dataContact.nombre.split(" ")[0],
+                convertDateFormat(messages[0].date),
+                messages[0].flag,
+                messages[0].message
+            );
+        });
+        await Promise.all(buildChatContacts);
+        addEventContact();
+        hiddenChatWithMessage(lastMessagesReceived[0].conversationId);
+        addEventFindContact();
+        addEventSendMessage();
     } catch (error) {
         messageError(error.message);
         console.error(error);
@@ -85,10 +69,37 @@ function addEventFindContact(){
     document.querySelector('.chats__search--input input').addEventListener("keydown", function (event) { 
         if (event.keyCode === 13) { 
             event.preventDefault();
-            findContact();
+            let searchValue = this.value.trimRight();
+            findContact(searchValue);
         }
     });
-    document.querySelector('.chats__search--figure').addEventListener('click', function(){findContact();});
+    document.querySelector('.chats__search--input input').addEventListener('input', function(){
+        if(this.value.trimRight() === ''){
+            hiddenAllContacts();
+        }
+    });
+    document.querySelector('.chats__search--figure').addEventListener('click', function(){
+        let searchValue = document.querySelector('.chats__search--input input').value.trimRight();
+        findContact(searchValue);
+    });
+}
+
+async function findContact (searchValue) {
+    let nodeListChatContact = document.querySelectorAll('.chat__contact');
+    let arrayChatContact = [...nodeListChatContact];
+    document.querySelector('.chats__search--input input').value = document.querySelector('.chats__search--input input').value.trimRight();
+    const comparison = (description) => description.querySelector('.chat__description').querySelector('.chat__description--up p').textContent === searchValue || description.querySelector('.chat__description').querySelector('.chat__description--down p').textContent === searchValue;
+    const elementFound = arrayChatContact.filter(comparison);
+    if (elementFound!== undefined) {
+        nodeListChatContact.forEach(element => {
+            let aux = elementFound.find((item)=>item.id === element.id);
+            if(aux=== undefined){
+                element.style.display = 'none';
+            }
+        });
+    } else {
+        await messageInfo('No se encontraron resultados');
+    }
 }
 
 function addEventSendMessage(){
@@ -113,15 +124,7 @@ async function sendMessage(message){
         let response = await sendMessageUser(data);
         console.log(response);
         if(response){
-            chatMessages.innerHTML += `
-            <div class="message__box message__my">
-                <p>${data.message.replace(new RegExp('\n', 'g'), '<br>')}
-                    <span>${convertFormatDateMessage(data.date)}
-                        <img class="message__see" src=${data.flag === 'true' ? 'https://i.ibb.co/1ZY2Jfh/see-hidden.png' : 'https://i.ibb.co/StygMHQ/see.png'} alt="">
-                    </span>
-                </p>
-            </div>
-            `;
+            printMessageUserLocal(data.message,data.date,data.flag);
         }else{
             throw new Error('El Error al enviar el mensaje, intentelo mas tarde');
         }
@@ -130,25 +133,6 @@ async function sendMessage(message){
         console.error(error);
     }
 }
-
-async function findContact () {
-    let nodeListChatContact = document.querySelectorAll('.chat__contact');
-    let arrayChatContact = [...nodeListChatContact];
-    let searchValue = document.querySelector('.chats__search--input input').value.trimRight();
-    document.querySelector('.chats__search--input input').value = document.querySelector('.chats__search--input input').value.trimRight();
-    const comparison = (description) => description.querySelector('.chat__description').querySelector('.chat__description--up p').textContent === searchValue || description.querySelector('.chat__description').querySelector('.chat__description--down p').textContent === searchValue;
-    const elementFound = arrayChatContact.find(comparison);
-    if (elementFound!== undefined) {
-        nodeListChatContact.forEach(element => {
-            if(element.id !== elementFound.id){
-                element.style.display = 'none';
-            }
-        });
-    } else {
-        await messageInfo('No se encontraron resultados');
-    }
-}
-
 
 async function getDataUserContact(conversation, idUser){
     try {
@@ -181,12 +165,7 @@ function addEventContact() {
 async function hiddenChatWithMessage(idConsersation){
     try {
         if(document.querySelector('.chats__search--input input').value.trimRight()!== ''){
-            let nodeListChatContact = document.querySelectorAll('.chat__contact');
-            nodeListChatContact.forEach(element => {
-                if(element.style.display === 'none'){
-                    element.style.display = 'flex';
-                }
-            });
+            hiddenAllContacts();
             document.querySelector('.chats__search--input input').value = '';
         }
         if (window.innerWidth < 600) {
@@ -202,24 +181,12 @@ async function hiddenChatWithMessage(idConsersation){
         document.querySelector('.header__chat--text--state').textContent = userChat.state === "true" ? "EN LINEA" : userChat.fechaConexion;
         let messages =  await getMessagesUser(idConsersation);
         messages = messages.sort((a, b) => new Date(b.date) - new Date(a.date)).reverse();
-        chatMessages.innerHTML = '';
+        cleanChat();
         messages.forEach(message => {
             if (message.userId.toString() === idUser.toString()) {
-                chatMessages.innerHTML += `
-                <div class="message__box message__my">
-                    <p>${message.message.replace(new RegExp('\n', 'g'), '<br>')}
-                        <span>${convertFormatDateMessage(message.date)}
-                            <img class="message__see" src=${message.flag === 'true' ? 'https://i.ibb.co/1ZY2Jfh/see-hidden.png' : 'https://i.ibb.co/StygMHQ/see.png'} alt="">
-                        </span>
-                    </p>
-                </div>
-                `;
+                printMessageUserLocal(message.message, convertFormatDateMessage(message.date), message.flag);
             } else {
-                chatMessages.innerHTML += `
-                <div class="message__box message__friend">
-                    <p>${message.message.replace(new RegExp('\n', 'g'), '<br>')}<br><span>${convertFormatDateMessage(message.date)}</span></p>
-                </div>
-                `;
+                printMessageFriend(message.message,convertFormatDateMessage(message.date));
             }
         });
         document.querySelector('.chat__input textarea').id = 'CON'+ idConsersation;
@@ -244,9 +211,18 @@ window.addEventListener('resize', function(){
 });
 
 document.querySelector('.header__chat__back--figure').addEventListener("click", function(){
-    chatMessages.innerHTML = '';
+    cleanChat();
     chatContainer.style.display = 'none';
     headerChat.style.display = 'none';
     headerUser.style.display = 'flex';
     chatsContainer.style.display = 'flex';
 });
+
+function hiddenAllContacts(){
+    let nodeListChatContact = document.querySelectorAll('.chat__contact');
+    nodeListChatContact.forEach(element => {
+        if(element.style.display === 'none'){
+            element.style.display = 'flex';
+        }
+    });
+}

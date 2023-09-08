@@ -13,6 +13,7 @@ module.exports = {
         messages: path.resolve(__dirname, './src/app/js/services/messages.js'),
         functions: path.resolve(__dirname, './src/app/js/helpers/functions.js'),
         variables: path.resolve(__dirname, './src/app/js/helpers/variables.js'),
+        printElements: path.resolve(__dirname, './src/app/js/helpers/printElements.js'),
         sweetalert: path.resolve(__dirname, './src/app/js/sweetalert.js'),
     },
     output: {
@@ -21,7 +22,7 @@ module.exports = {
             let outputPath = '';
             if (chunkData.chunk.name === 'users' || chunkData.chunk.name === 'conversations' || chunkData.chunk.name === 'messages') {
                 outputPath = 'services/';
-            } else if (chunkData.chunk.name === 'functions' || chunkData.chunk.name === 'variables') {
+            } else if (chunkData.chunk.name === 'functions' || chunkData.chunk.name === 'variables' || chunkData.chunk.name === 'printElements') {
                 outputPath = 'helpers/';
             }
             return `${outputPath}[name].js`;
