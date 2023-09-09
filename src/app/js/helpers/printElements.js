@@ -38,9 +38,17 @@ export function printChatContact(idElement,image,name,date,flag,message){
             </div>
             <div class="chat__description--down">
                 <img src=${flag === "true" ? 'https://i.ibb.co/1ZY2Jfh/see-hidden.png' : 'https://i.ibb.co/StygMHQ/see.png'} alt="">
-                <p>${message}</p>
+                <p>${formatMessageConvert(message)}</p>
             </div>
         </div>
     </div>
     `;
+}
+
+function formatMessageConvert(message){
+    message = message.replace(new RegExp('\n', 'g'), ' ');
+    if (message.length > 25) {
+        message = message.slice(0,25)+"...";
+    }
+    return message;
 }

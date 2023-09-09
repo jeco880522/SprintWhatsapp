@@ -59,10 +59,17 @@ async function buildHome(){
         hiddenChatWithMessage(lastMessagesReceived[0].conversationId);
         addEventFindContact();
         addEventSendMessage();
+        addEventEditProfile();
     } catch (error) {
         messageError(error.message);
         console.error(error);
     }
+}
+
+function addEventEditProfile(){
+    document.querySelector('.header__user--figure').addEventListener('click', function (){
+
+    });
 }
 
 function addEventFindContact(){
@@ -88,9 +95,10 @@ async function findContact (searchValue) {
     let nodeListChatContact = document.querySelectorAll('.chat__contact');
     let arrayChatContact = [...nodeListChatContact];
     document.querySelector('.chats__search--input input').value = document.querySelector('.chats__search--input input').value.trimRight();
-    const comparison = (description) => description.querySelector('.chat__description').querySelector('.chat__description--up p').textContent === searchValue || description.querySelector('.chat__description').querySelector('.chat__description--down p').textContent === searchValue;
+    const comparison = (description) => description.querySelector('.chat__description').querySelector('.chat__description--up p').textContent.includes(searchValue) || description.querySelector('.chat__description').querySelector('.chat__description--down p').textContent.includes(searchValue);
     const elementFound = arrayChatContact.filter(comparison);
-    if (elementFound!== undefined) {
+    console.log('elementFound',elementFound);
+    if (elementFound.length > 0) {
         nodeListChatContact.forEach(element => {
             let aux = elementFound.find((item)=>item.id === element.id);
             if(aux=== undefined){
@@ -124,7 +132,7 @@ async function sendMessage(message){
         let response = await sendMessageUser(data);
         console.log(response);
         if(response){
-            printMessageUserLocal(data.message,data.date,data.flag);
+            printMessageUserLocal(data.message,convertFormatDateMessage(data.date),data.flag);
         }else{
             throw new Error('El Error al enviar el mensaje, intentelo mas tarde');
         }
@@ -201,6 +209,8 @@ window.addEventListener('resize', function(){
         if(chatContainer.style.display === 'block' && headerChat.style.display === 'flex'){
             headerUser.style.display = 'flex';
             chatsContainer.style.display = 'flex';
+            chatContainer.style.display = 'block';
+            headerChat.style.display = 'flex';
         }
     }else{
         if(chatContainer.style.display === 'block' && headerChat.style.display === 'flex'){

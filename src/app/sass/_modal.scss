@@ -1,10 +1,12 @@
-.home{
-    &__modal {
-        width: 70%;
+.modal{
+    &__container {
+        width: 30%;
         height: 100%;
         position: absolute;
+        //display: block;
+        display: none;
         top: 0;
-        left: 30%;
+        left: 0;
         background-image: url('../../images/fondow.jpg');
         @media screen and (max-width: 600px)  {
             display: none;

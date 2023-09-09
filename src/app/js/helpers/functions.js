@@ -54,6 +54,8 @@ function isSameWeek(date1, date2) {
 
 export function getCurrentDateInFormat() {
     const dateCurrent = new Date();
+    const timeZoneOffset = -5;
+    dateCurrent.setHours(dateCurrent.getHours() + timeZoneOffset);
     const dateFormatted = dateCurrent.toISOString().slice(0, 19).replace(' ', 'T');
     return dateFormatted;
 }

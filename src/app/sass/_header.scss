@@ -27,6 +27,9 @@
             width: 12%;
             @include mixins.img;
             @include mixins.circleImage;
+            &:hover{
+                cursor: pointer;
+            }
         }
     }
     &__chat{
