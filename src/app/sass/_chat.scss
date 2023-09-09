@@ -60,7 +60,7 @@
         padding-bottom: 2%;
         textarea {
             resize: none;
-            width: 80%;
+            width: 75%;
             border: none;
             border-radius: 25px;
             padding: 1%;
@@ -79,6 +79,9 @@
             }
             @include mixins.flexAndItemsCenter;
             @include mixins.img;
+            &:hover {
+                cursor: pointer;
+            }
         }
     }
 }

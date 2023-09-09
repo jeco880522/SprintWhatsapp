@@ -50,3 +50,18 @@ export const userById = async (id) => {
         );
     }
 }
+
+export const updateInfoUser = async (id, data)=> {
+    try {
+        const response = await axios.put(url + '/users/' + id, data);
+        if(response.status !== 200){
+            throw new Error('Error en la respuesta HTTP: ' + response.status);
+        } else {
+            return response;
+        }
+    } catch(e) {
+        messageError(
+            e.message
+        );
+    }
+}

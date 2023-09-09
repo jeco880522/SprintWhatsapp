@@ -1,19 +1,98 @@
+@use 'variables';
+@use 'mixins';
+
 .modal{
     &__container {
         width: 30%;
         height: 100%;
         position: absolute;
-        //display: block;
         display: none;
         top: 0;
         left: 0;
-        background-image: url('../../images/fondow.jpg');
+        background-color: variables.$headerColor;
         @media screen and (max-width: 600px)  {
-            display: none;
+            width: 100%;
         }
         @media screen and (min-width: 600px ) and (max-width: 820px ) {
-            left: 50%;
             width: 50%;
         }
+    } 
+    &__header{
+        @include mixins.flexAndItemsCenter;
+        padding: 4%;
+        background-color: variables.$headerColorProfile;
+        &--figure{
+            width: 6%;
+            @include mixins.flexAndItemsCenter;
+            @include mixins.img;
+            &:hover{
+                cursor: pointer;
+            }
+        }
+        &--text{
+            padding-left: 10%;
+            font-weight: 600;
+            color: variables.$backgroundInputColor;
+        }
     }
+    &__image{
+        display: flex;
+        justify-content: center;
+        padding-top: 4%;
+        padding-bottom: 4%;
+        &--figure{
+            width: 40%;
+            height: 150px;
+            border-radius: 50%;
+            @include mixins.flexAndItemsCenter;
+            @include mixins.img;
+            @include mixins.circleImage;
+            &:hover{
+                cursor: pointer;
+            }
+        }
+    }
+    &__name{
+        display: flex;
+        flex-direction: column;
+        background-color: variables.$friendMessageColor;
+        padding: 3%;
+        &--text{
+            font-weight: 600;
+            color: variables.$borderHeaderColor;
+            padding-bottom: 2%;
+        }
+        &--container{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        &--figure{
+            width: 5%;
+            @include mixins.flexAndItemsCenter;
+            @include mixins.img;
+            &:hover{
+                cursor: pointer;
+                width: 7%;
+                padding: 1%;
+                border-radius: 5px;
+                background-color: variables.$hoverContactColor;
+            }
+        }
+        &--input{
+            width: 75%;
+            border: none;
+            border-radius: 25px;
+            padding: 2%;
+            height: 40px;
+            &:focus{
+                background-color: variables.$chatInputColor;
+                @include mixins.focusNone;
+            }
+        }
+    }
+}
+
+#sendName, #sendImage{
+    display: none;
 }

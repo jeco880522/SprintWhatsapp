@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
-$headerColor: hsla(0, 0%, 92%, 0.808);
+$headerColor: hsl(0, 0%, 92%);
 $fontFamily: 'Poppins', sans-serif;
 $borderHeaderColor: hsl(0, 0%, 60%);
 $backgroundChatsSearchColor: hsl(0, 0%, 95%);
@@ -12,6 +12,7 @@ $chatInputColor: hsl(0, 0%, 95%);
 $menssageColor:hsl(94, 78%, 87%);
 $seeTextColor: hsla(0, 0%, 43%, 0.795);
 $friendMessageColor: hsl(0, 0%, 100%);
+$headerColorProfile: #5bb992;
 
 $main-font: Arial, sans-serif;
 $primary-color: #25d366;

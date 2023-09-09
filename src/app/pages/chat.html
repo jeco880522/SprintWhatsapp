@@ -55,6 +55,9 @@
                     <img src="../../images/clip.png" alt="">
                 </figure>
                 <textarea type="text" placeholder="Type a message" rows="1"></textarea>
+                <figure id="sendMessage" class="chat__input--figure">
+                    <img src="https://i.ibb.co/VY12y7h/send.png" alt="">
+                </figure>
                 <figure class="chat__input--figure">
                     <img src="../../images/microphone.png" alt="">
                 </figure>
@@ -63,10 +66,10 @@
     </main>
     <div class="modal__container">
         <div class="modal__header">
-            <figure>
-                <img src="https://i.ibb.co/gMTPCdX/back-white.png" alt="">
+            <figure class="modal__header--figure">
+                <img src="https://i.ibb.co/B6BqX28/back-white.png" alt="">
             </figure>
-            <label for="Perfil">Perfil</label>
+            <label class="modal__header--text" for="Perfil">Perfil</label>
         </div>
         <div class="modal__image">
             <figure class="modal__image--figure">
@@ -74,13 +77,28 @@
             </figure>
         </div>
         <div class="modal__name">
-            <div>
-                <label for="name">Tu nombre</label>
-                <input name="name" placeholder="Name" type="text">
+            <label class="modal__name--text" for="name">Tu nombre</label>
+            <div class="modal__name--container">
+                <input id="name" class="modal__name--input" name="name" placeholder="Name" type="text" disabled>
+                <figure id="sendName" class="modal__name--figure">
+                    <img src="https://i.ibb.co/VY12y7h/send.png" alt="">
+                </figure>
+                <figure id="editName" class="modal__name--figure" title="Editar nombre">
+                    <img src="https://i.ibb.co/Rc7cWCC/edit.png" alt="">
+                </figure>
             </div>
-            <figure>
-                <img src="https://i.ibb.co/gTYczxw/edit.png" alt="">
-            </figure>
+        </div>
+        <div class="modal__name">
+            <label class="modal__name--text" for="name">Url Image</label>
+            <div class="modal__name--container">
+                <input id="image" class="modal__name--input" name="url" placeholder="Url" type="text" disabled>
+                <figure id="sendImage" class="modal__name--figure">
+                    <img src="https://i.ibb.co/VY12y7h/send.png" alt="">
+                </figure>
+                <figure id="editImage" class="modal__name--figure" title="Editar image">
+                    <img src="https://i.ibb.co/Rc7cWCC/edit.png" alt="">
+                </figure>
+            </div>
         </div>
     </div>
 </body>
