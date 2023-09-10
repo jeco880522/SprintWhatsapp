@@ -67,9 +67,43 @@ async function buildHome(){
         addEventFindContact();
         addEventSendMessage();
         addEventEditProfile();
+        addEventFindMessages();
     } catch (error) {
         messageError(error.message);
         console.error(error);
+    }
+}
+
+function addEventFindMessages(){
+    document.querySelector('#searchInput input').addEventListener("keydown", function (event) { 
+        if (event.keyCode === 13) { 
+            event.preventDefault();
+            let searchValue = this.value.trimRight();
+            findMessages(searchValue);
+        }
+    });
+    document.querySelector('#searchInput input').addEventListener("input", function(){
+        if (this.value.trimRight()==='') {
+            document.getElementById('searchResults').innerHTML = '';
+        }
+    })
+}
+
+async function findMessages(searchValue){
+    let nodeListChatContact = document.querySelectorAll('.message__box');
+    let arrayChatContact = [...nodeListChatContact];
+    document.querySelector('#searchInput input').value = document.querySelector('#searchInput input').value.trimRight();
+    const comparison = (description) => description.querySelector('p').textContent.includes(searchValue);
+
+    const elementFound = arrayChatContact.filter(comparison);
+    console.log('elementFound',elementFound);
+    if (elementFound.length > 0) {
+        elementFound.forEach(element => {
+            console.log(element);
+            document.getElementById('searchResults').innerHTML += element.outerHTML;
+        });
+    } else {
+        await messageInfo('No se encontraron resultados');
     }
 }
 
@@ -136,20 +170,20 @@ function actionEditImageOrName(election){
 }
 
 function addEventFindContact(){
-    document.querySelector('.chats__search--input input').addEventListener("keydown", function (event) { 
+    document.querySelector('#findChat input').addEventListener("keydown", function (event) { 
         if (event.keyCode === 13) { 
             event.preventDefault();
             let searchValue = this.value.trimRight();
             findContact(searchValue);
         }
     });
-    document.querySelector('.chats__search--input input').addEventListener('input', function(){
+    document.querySelector('#findChat input').addEventListener('input', function(){
         if(this.value.trimRight() === ''){
             hiddenAllContacts();
         }
     });
     document.querySelector('.chats__search--figure').addEventListener('click', function(){
-        let searchValue = document.querySelector('.chats__search--input input').value.trimRight();
+        let searchValue = document.querySelector('#findChat input').value.trimRight();
         findContact(searchValue);
     });
 }
@@ -157,7 +191,7 @@ function addEventFindContact(){
 async function findContact (searchValue) {
     let nodeListChatContact = document.querySelectorAll('.chat__contact');
     let arrayChatContact = [...nodeListChatContact];
-    document.querySelector('.chats__search--input input').value = document.querySelector('.chats__search--input input').value.trimRight();
+    document.querySelector('#findChat input').value = document.querySelector('#findChat input').value.trimRight();
     const comparison = (description) => description.querySelector('.chat__description').querySelector('.chat__description--up p').textContent.includes(searchValue) || description.querySelector('.chat__description').querySelector('.chat__description--down p').textContent.includes(searchValue);
     const elementFound = arrayChatContact.filter(comparison);
     console.log('elementFound',elementFound);
@@ -249,15 +283,18 @@ function addEventContact() {
 
 async function hiddenChatWithMessage(idConsersation){
     try {
-        if(document.querySelector('.chats__search--input input').value.trimRight()!== ''){
+        if(document.querySelector('#findChat input').value.trimRight()!== ''){
             hiddenAllContacts();
-            document.querySelector('.chats__search--input input').value = '';
+            document.querySelector('#findChat input').value = '';
         }
         let conversationData = await getConversationById(idConsersation);
         let userChat = await getDataUserContact(conversationData, idUser);
         document.querySelector('.header__chat--figure img').src = userChat.image;
         document.querySelector('.header__chat--text--name').textContent = userChat.nombre.split(" ")[0];
         document.querySelector('.header__chat--text--state').textContent = userChat.state === "true" ? "EN LINEA" : userChat.fechaConexion;
+        let usuario = document.querySelector('.header__chat--text--name').textContent;
+        let usuario2 = document.querySelector('.traerusuario');
+        usuario2.textContent = "Mensajes con "+usuario;
         let messages =  await getMessagesUser(idConsersation);
         messages = messages.sort((a, b) => new Date(b.date) - new Date(a.date)).reverse();
         cleanChat();
@@ -310,3 +347,13 @@ function hiddenAllContacts(){
         }
     });
 }
+
+
+document.getElementById("openMenuButton").addEventListener("click", function() {
+    document.getElementById("menuModal").style.display = "block"; 
+});
+  
+
+  document.getElementById("closeMenuButton").addEventListener("click", function() {
+    document.getElementById("menuModal").style.display = "none";
+});

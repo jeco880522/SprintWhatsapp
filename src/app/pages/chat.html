@@ -27,14 +27,14 @@
                 </div>
             </div>
             <figure class="header__chat--loupe">
-                <img src="../../images/loupe.png" alt="">
+                <img id="openMenuButton" src="../../images/loupe.png" alt="">
             </figure>
         </div>
     </header>
     <main class="main__container">
         <section class="chats__container">
             <article class="chats__search">
-                <div class="chats__search--input">
+                <div id="findChat" class="chats__search--input">
                     <figure class="chats__search--figure">
                         <img src="../../images/loupe.png" alt="">
                     </figure>
@@ -64,6 +64,23 @@
             </article>
         </section>
     </main>
+    <div id="menuModal" class="menu-modal">
+        <div class="menu-content">
+            <span id="closeMenuButton" class="close-menu-button">&times;</span>
+            <p id="traerusuario" class="traerusuario"></p>
+                <article class="chats__search">
+                    <div id="searchInput" class="chats__search--input">
+                        <figure id="findMassages" class="chats__search--figure">
+                            <img src="../../images/loupe.png" alt="">
+                        </figure>
+                        <input type="text" placeholder="Escribe aquí para buscar mensajes">
+                    </div>
+                </article>
+            <div id="searchResults">
+            
+            </div>
+        </div>
+    </div>
     <div class="modal__container">
         <div class="modal__header">
             <figure class="modal__header--figure">
