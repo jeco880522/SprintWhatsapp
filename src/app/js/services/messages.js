@@ -35,3 +35,18 @@ export const sendMessageUser = async (data) => {
         );
     }
 }
+
+export const updateInfoMessage = async (id, data)=> {
+    try {
+        const response = await axios.put(url + '/messages/' + id, data);
+        if(response.status !== 200){
+            throw new Error('Error en la respuesta HTTP: ' + response.status);
+        } else {
+            return response;
+        }
+    } catch(e) {
+        messageError(
+            e.message
+        );
+    }
+}

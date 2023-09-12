@@ -2,7 +2,7 @@ import "../sass/style.scss";
 import { convertDateFormat, convertFormatDateMessage, getCurrentDateInFormat } from "./helpers/functions.js";
 import { userById, updateInfoUser } from "./services/users.js";
 import { getConversationsUser,getConversationById } from "./services/conversations.js";
-import { getMessagesUser, sendMessageUser } from "./services/messages.js";
+import { getMessagesUser, sendMessageUser, updateInfoMessage } from "./services/messages.js";
 import { messageError, messageInfo, messageSuccess } from "./sweetalert.js";
 import { printMessageUserLocal, printMessageFriend, cleanChat, printChatContact } from "./helpers/printElements.js";
 
@@ -75,6 +75,14 @@ async function buildHome(){
 }
 
 function addEventFindMessages(){
+    document.getElementById("openMenuButton").addEventListener("click", function() {
+        document.getElementById("menuModal").style.display = "block"; 
+    });
+    document.getElementById("closeMenuButton").addEventListener("click", function() {
+        document.querySelector('#searchInput input').value = '';
+        document.getElementById('searchResults').innerHTML = '';
+        document.getElementById("menuModal").style.display = "none";
+    });
     document.querySelector('#searchInput input').addEventListener("keydown", function (event) { 
         if (event.keyCode === 13) { 
             event.preventDefault();
@@ -86,20 +94,18 @@ function addEventFindMessages(){
         if (this.value.trimRight()==='') {
             document.getElementById('searchResults').innerHTML = '';
         }
-    })
+    });
 }
 
 async function findMessages(searchValue){
-    let nodeListChatContact = document.querySelectorAll('.message__box');
-    let arrayChatContact = [...nodeListChatContact];
+    document.getElementById('searchResults').innerHTML = '';
+    let nodeListChatMessages = document.querySelectorAll('.message__box');
+    let arrayChatContact = [...nodeListChatMessages];
     document.querySelector('#searchInput input').value = document.querySelector('#searchInput input').value.trimRight();
     const comparison = (description) => description.querySelector('p').textContent.includes(searchValue);
-
     const elementFound = arrayChatContact.filter(comparison);
-    console.log('elementFound',elementFound);
     if (elementFound.length > 0) {
         elementFound.forEach(element => {
-            console.log(element);
             document.getElementById('searchResults').innerHTML += element.outerHTML;
         });
     } else {
@@ -112,6 +118,10 @@ function addEventEditProfile(){
         document.querySelector('.modal__container').style.display = 'block';
     });
     document.querySelector('.modal__header--figure').addEventListener('click', function(){
+        document.getElementById('name').disabled = true;
+        document.getElementById('image').disabled = true;
+        document.getElementById('sendImage').style.display = 'none';
+        document.getElementById('sendName').style.display = 'none';
         document.querySelector('.modal__container').style.display = 'none';
     });
     document.getElementById('editName').addEventListener('click', function () {actionEditImageOrName('name');});
@@ -194,7 +204,6 @@ async function findContact (searchValue) {
     document.querySelector('#findChat input').value = document.querySelector('#findChat input').value.trimRight();
     const comparison = (description) => description.querySelector('.chat__description').querySelector('.chat__description--up p').textContent.includes(searchValue) || description.querySelector('.chat__description').querySelector('.chat__description--down p').textContent.includes(searchValue);
     const elementFound = arrayChatContact.filter(comparison);
-    console.log('elementFound',elementFound);
     if (elementFound.length > 0) {
         nodeListChatContact.forEach(element => {
             let aux = elementFound.find((item)=>item.id === element.id);
@@ -218,9 +227,9 @@ function addEventSendMessage(){
         }
     });
     document.getElementById('sendMessage').addEventListener('click',function(){
-        if(this.value.trimRight() !== ''){
-            sendMessage(this.value);
-            this.value = '';
+        if(document.querySelector('.chat__input textarea').value.trimRight() !== ''){
+            sendMessage(document.querySelector('.chat__input textarea').value);
+            document.querySelector('.chat__input textarea').value = '';
         }
     });
 }
@@ -235,9 +244,8 @@ async function sendMessage(message){
             flag: "false"
         };
         let response = await sendMessageUser(data);
-        console.log(response);
         if(response){
-            printMessageUserLocal(data.message,convertFormatDateMessage(data.date),data.flag);
+            printMessageUserLocal(data.id, data.message,convertFormatDateMessage(data.date),data.flag);
         }else{
             throw new Error('El Error al enviar el mensaje, intentelo mas tarde');
         }
@@ -300,16 +308,34 @@ async function hiddenChatWithMessage(idConsersation){
         cleanChat();
         messages.forEach(message => {
             if (message.userId.toString() === idUser.toString()) {
-                printMessageUserLocal(message.message, convertFormatDateMessage(message.date), message.flag);
+                printMessageUserLocal(message.id, message.message, convertFormatDateMessage(message.date), message.flag);
             } else {
                 printMessageFriend(message.message,convertFormatDateMessage(message.date));
             }
         });
         document.querySelector('.chat__input textarea').id = 'CON'+ idConsersation;
+        addEventSeeMessageFriend(messages);
     } catch (error) {
         messageError(error.message);
         console.error(error);
     }
+}
+
+function addEventSeeMessageFriend(messages){
+    document.querySelector('.chat__input textarea').addEventListener('focus', async function(){
+        try {
+            let messagesFriend = messages.filter((message) => message.userId.toString() !== idUser.toString() && message.flag === 'false');
+            if(messagesFriend.length > 0){
+                messagesFriend.forEach( async (message) => {
+                    message.flag = 'true';
+                    await updateInfoMessage(message.id, message);
+                });
+            }
+        } catch (error) {
+            messageError(error.message);
+            console.error(error);
+        }
+    });
 }
 
 window.addEventListener('resize', function(){
@@ -347,13 +373,3 @@ function hiddenAllContacts(){
         }
     });
 }
-
-
-document.getElementById("openMenuButton").addEventListener("click", function() {
-    document.getElementById("menuModal").style.display = "block"; 
-});
-  
-
-  document.getElementById("closeMenuButton").addEventListener("click", function() {
-    document.getElementById("menuModal").style.display = "none";
-});

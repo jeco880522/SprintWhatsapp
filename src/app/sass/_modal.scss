@@ -2,6 +2,24 @@
 @use 'mixins';
 
 .modal{
+    &__menu {
+        background-color: hsl(0, 0%, 95%);
+        width: 30%;
+        height: 100%;
+        position: absolute;
+        display: none;
+        top: 0;
+        left: 70%;
+        transition: right 0.3s ease-in-out;
+        @media screen and (max-width: 600px)  {
+            left: 0;
+            width: 100%;
+        }
+        @media screen and (min-width: 600px) and (max-width: 800px)  {
+            left: 50%;
+            width: 100%;
+        }
+    }
     &__container {
         width: 30%;
         height: 100%;
@@ -25,9 +43,6 @@
             width: 6%;
             @include mixins.flexAndItemsCenter;
             @include mixins.img;
-            &:hover{
-                cursor: pointer;
-            }
         }
         &--text{
             padding-left: 10%;
@@ -97,27 +112,6 @@
     display: none;
 }
 
-.menu-modal {
-    background-color: hsl(0, 0%, 95%);
-    width: 30%;
-    height: 100%;
-    position: absolute;
-    display: none;
-    top: 0;
-    left: 70%;
-    transition: right 0.3s ease-in-out;
-
-    
-    @media screen and (max-width: 600px)  {
-        left: 0;
-        width: 100%;
-    }
-
-    @media screen and (min-width: 600px) and (max-width: 800px)  {
-        left: 50%;
-        width: 100%;
-    }
-}
 #closeMenuButton,#traerusuario{
     display: inline-block;
     vertical-align: middle;
@@ -126,6 +120,8 @@
 #searchResults{
     padding-left: 10px;
     padding-right: 20px;
+    overflow: auto;
+    height: 90%;
 }
 .close-menu-button {
     padding-left: 7%;

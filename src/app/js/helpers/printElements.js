@@ -5,9 +5,9 @@ export function cleanChat() {
     chatMessages.innerHTML = '';
 }
 
-export function printMessageUserLocal(message, date, flag){
+export function printMessageUserLocal(id,message, date, flag){ 
     chatMessages.innerHTML += `
-    <div class="message__box message__my">
+    <div id=${'M'+id} class="message__box message__my">
         <p>${message.replace(new RegExp('\n', 'g'), '<br>')}
             <span>${date}
                 <img class="message__see" src=${flag === 'true' ? 'https://i.ibb.co/1ZY2Jfh/see-hidden.png' : 'https://i.ibb.co/StygMHQ/see.png'} alt="">

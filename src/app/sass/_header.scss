@@ -103,6 +103,9 @@
             }
             margin: 0;
             @include mixins.img;
+            &:hover {
+                cursor: pointer;
+            }
         }
     }
 }

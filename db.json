@@ -104,7 +104,7 @@
       "userId": 1,
       "date": "2023-09-04T10:05:03",
       "message": "Hola 4",
-      "flag": "false"
+      "flag": "true"
     },
     {
       "id": 5,
@@ -120,15 +120,15 @@
       "userId": 1,
       "date": "2023-09-04T10:25:03",
       "message": "Hola",
-      "flag": "false"
+      "flag": "true"
     },
     {
       "id": 7,
-      "conversationId": 4,
-      "userId": 2,
+      "conversationId": 2,
+      "userId": 3,
       "date": "2023-09-04T10:58:03",
       "message": "Hola 6",
-      "flag": "false"
+      "flag": "true"
     },
     {
       "id": 8,
@@ -151,7 +151,7 @@
       "userId": 1,
       "date": "2023-09-08T20:09:19",
       "message": "¿Como estas?\n¿Bien o que?",
-      "flag": "false",
+      "flag": "true",
       "id": 10
     },
     {
@@ -167,7 +167,7 @@
       "userId": 3,
       "date": "2023-09-08T20:33:18",
       "message": "Perro desgraciado",
-      "flag": "false",
+      "flag": "true",
       "id": 11
     },
     {
@@ -175,7 +175,7 @@
       "userId": 1,
       "date": "2023-09-10T12:14:36",
       "message": "Juan",
-      "flag": "false",
+      "flag": "true",
       "id": 12
     },
     {
@@ -185,6 +185,142 @@
       "message": "Hola Juan, como vas?",
       "flag": "false",
       "id": 13
+    },
+    {
+      "conversationId": 1,
+      "userId": 2,
+      "date": "2023-09-11T22:16:12",
+      "message": "Hola ¿Como estas?",
+      "flag": "true",
+      "id": 14
+    },
+    {
+      "conversationId": 1,
+      "userId": 2,
+      "date": "2023-09-11T22:17:55",
+      "message": "No me deje en visto",
+      "flag": "true",
+      "id": 15
+    },
+    {
+      "conversationId": 1,
+      "userId": 2,
+      "date": "2023-09-11T22:19:56",
+      "message": ":(",
+      "flag": "true",
+      "id": 16
+    },
+    {
+      "conversationId": 1,
+      "userId": 2,
+      "date": "2023-09-11T22:20:52",
+      "message": ":(",
+      "flag": "true",
+      "id": 17
+    },
+    {
+      "conversationId": 1,
+      "userId": 1,
+      "date": "2023-09-11T22:22:04",
+      "message": "Perdon :(",
+      "flag": "true",
+      "id": 18
+    },
+    {
+      "conversationId": 1,
+      "userId": 1,
+      "date": "2023-09-11T22:22:38",
+      "message": "Lo siento :(",
+      "flag": "true",
+      "id": 19
+    },
+    {
+      "conversationId": 1,
+      "userId": 1,
+      "date": "2023-09-11T22:24:26",
+      "message": ":(",
+      "flag": "true",
+      "id": 20
+    },
+    {
+      "conversationId": 1,
+      "userId": 1,
+      "date": "2023-09-11T22:26:14",
+      "message": ":(",
+      "flag": "true",
+      "id": 21
+    },
+    {
+      "conversationId": 1,
+      "userId": 1,
+      "date": "2023-09-11T22:27:28",
+      "message": ":(",
+      "flag": "true",
+      "id": 22
+    },
+    {
+      "conversationId": 1,
+      "userId": 1,
+      "date": "2023-09-11T22:29:43",
+      "message": ":(",
+      "flag": "true",
+      "id": 23
+    },
+    {
+      "conversationId": 1,
+      "userId": 1,
+      "date": "2023-09-11T22:30:13",
+      "message": ":(",
+      "flag": "true",
+      "id": 24
+    },
+    {
+      "conversationId": 1,
+      "userId": 1,
+      "date": "2023-09-11T22:31:04",
+      "message": ":(",
+      "flag": "true",
+      "id": 25
+    },
+    {
+      "conversationId": 1,
+      "userId": 2,
+      "date": "2023-09-11T22:32:15",
+      "message": "Sorry",
+      "flag": "true",
+      "id": 26
+    },
+    {
+      "conversationId": 3,
+      "userId": 1,
+      "date": "2023-09-11T22:33:18",
+      "message": "Hola",
+      "flag": "true",
+      "id": 27
+    },
+    {
+      "conversationId": 3,
+      "userId": 3,
+      "date": "2023-09-11T22:34:05",
+      "message": "Hola :3",
+      "flag": "true",
+      "id": 28
+    },
+    {
+      "conversationId": 3,
+      "userId": 1,
+      "date": "2023-09-11T22:41:58",
+      "message": "¿Como estas?",
+      "flag": "true",
+      "id": 29
+    },
+    {
+      "conversationId": 3,
+      "userId": 1,
+      "date": "2023-09-11T22:43:24",
+      "message": "No me deje en visto",
+      "flag": "false",
+      "id": 30
     }
   ]
 }
