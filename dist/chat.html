@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="cc43d5033cefd9f7d82c.css">
+    <title>Chat</title>
+<script defer src="chat.js"></script></head>
+<body class="body__container">
+    <header class="header__container">
+        <div class="header__user">
+            <figure class="header__user--figure">
+                <img src="a6143582309785dca610.png" alt="user image">
+            </figure>
+        </div>
+        <div class="header__chat">
+            <div class="header__chat--contact">
+                <figure class="header__chat__back--figure">
+                    <img src="https://i.ibb.co/nRFMZbL/back.png" alt="back chat">
+                </figure>
+                <figure class="header__chat--figure">
+                    <img src="a6143582309785dca610.png" alt="user image chat">
+                </figure>
+                <div class="header__chat--text">
+                    <p class="header__chat--text--name"></p>
+                    <p class="header__chat--text--state"></p>
+                </div>
+            </div>
+            <figure class="header__chat--loupe">
+                <img id="openMenuButton" src="a27091ef0c45faf8a66e.png" alt="">
+            </figure>
+        </div>
+    </header>
+    <main class="main__container">
+        <section class="chats__container">
+            <article class="chats__search">
+                <div id="findChat" class="chats__search--input">
+                    <figure class="chats__search--figure">
+                        <img src="a27091ef0c45faf8a66e.png" alt="">
+                    </figure>
+                    <input type="text" placeholder="Buscar o iniciar un nuevo chat">
+                </div>
+            </article>
+            <article class="chats__contacts">
+            </article>
+        </section>
+        <section class="chat__container">
+            <article class="chat__menssages">
+            </article>
+            <article class="chat__input">
+                <figure class="chat__input--figure">
+                    <img src="4e4f4061b1cf557b6cb7.png" alt="">
+                </figure>
+                <figure class="chat__input--figure">
+                    <img src="8c76fd76b7e84e9dc42f.png" alt="">
+                </figure>
+                <textarea type="text" placeholder="Type a message" rows="1"></textarea>
+                <figure id="sendMessage" class="chat__input--figure">
+                    <img src="https://i.ibb.co/VY12y7h/send.png" alt="">
+                </figure>
+                <figure class="chat__input--figure">
+                    <img src="effb021cb32309301520.png" alt="">
+                </figure>
+            </article>
+        </section>
+    </main>
+    <div id="menuModal" class="modal__menu">
+        <span id="closeMenuButton" class="close-menu-button">&times;</span>
+        <p id="traerusuario" class="traerusuario"></p>
+            <article class="chats__search">
+                <div id="searchInput" class="chats__search--input">
+                    <figure id="findMassages" class="chats__search--figure">
+                        <img src="a27091ef0c45faf8a66e.png" alt="">
+                    </figure>
+                    <input type="text" placeholder="Escribe aquí para buscar mensajes">
+                </div>
+            </article>
+        <div id="searchResults">
+        </div>
+    </div>
+    <div class="modal__container">
+        <div class="modal__header">
+            <figure class="modal__header--figure">
+                <img src="https://i.ibb.co/B6BqX28/back-white.png" alt="">
+            </figure>
+            <label class="modal__header--text" for="Perfil">Perfil</label>
+        </div>
+        <div class="modal__image">
+            <figure class="modal__image--figure">
+                <img src="a6143582309785dca610.png" alt="">
+            </figure>
+        </div>
+        <div class="modal__name">
+            <label class="modal__name--text" for="name">Tu nombre</label>
+            <div class="modal__name--container">
+                <input id="name" class="modal__name--input" name="name" placeholder="Name" type="text" disabled>
+                <figure id="sendName" class="modal__name--figure">
+                    <img src="https://i.ibb.co/VY12y7h/send.png" alt="">
+                </figure>
+                <figure id="editName" class="modal__name--figure" title="Editar nombre">
+                    <img src="https://i.ibb.co/Rc7cWCC/edit.png" alt="">
+                </figure>
+            </div>
+        </div>
+        <div class="modal__name">
+            <label class="modal__name--text" for="name">Url Image</label>
+            <div class="modal__name--container">
+                <input id="image" class="modal__name--input" name="url" placeholder="Url" type="text" disabled>
+                <figure id="sendImage" class="modal__name--figure">
+                    <img src="https://i.ibb.co/VY12y7h/send.png" alt="">
+                </figure>
+                <figure id="editImage" class="modal__name--figure" title="Editar image">
+                    <img src="https://i.ibb.co/Rc7cWCC/edit.png" alt="">
+                </figure>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
